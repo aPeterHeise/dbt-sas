@@ -24,7 +24,7 @@ from dbt.adapters.sas import sas_log, sas_macros
 from dbt.adapters.sas.credentials import SasCredentials
 from dbt.adapters.sas.cte import prepare_query
 from dbt.adapters.sas.handlers import get_handler
-from dbt.contracts.connection import AdapterResponse, Connection, ConnectionState
+from dbt.adapters.contracts.connection import AdapterResponse, Connection, ConnectionState
 from dbt_common.exceptions import (
     DbtRuntimeError,
     ConnectionError
