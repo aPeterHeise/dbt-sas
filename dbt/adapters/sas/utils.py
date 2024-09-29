@@ -23,9 +23,7 @@ from typing import Any, List
 import agate
 
 from dbt.adapters.sas.constants import WORK_SCHEMA
-from dbt_common.exceptions import (
-    DbtRuntimeError
-)
+from dbt_common.exceptions import DbtRuntimeError
 
 __all__ = [
     "get_temp_filename",

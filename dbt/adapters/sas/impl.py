@@ -32,7 +32,7 @@ from dbt.adapters.sas.utils import (
     path_join,
 )
 from dbt.contracts.graph.manifest import Manifest
-from dbt.contracts.relation import RelationType
+from dbt.adapters.contracts.relation import RelationType
 from dbt_common.exceptions import DbtRuntimeError
 
 __all__ = ["SasAdapter"]
