@@ -23,7 +23,7 @@ from requests.exceptions import RequestException
 
 from dbt.adapters.sas import sas_log
 from dbt.adapters.sas.credentials import SasCredentials
-from dbt.clients.agate_helper import DEFAULT_TYPE_TESTER
+from dbt_common.clients.agate_helper import DEFAULT_TYPE_TESTER
 from dbt.exceptions import DatabaseException, FailedToConnectException
 
 from .abstract_handler import AbstractConnectionHandler

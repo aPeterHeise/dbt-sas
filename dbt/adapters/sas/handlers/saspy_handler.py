@@ -28,7 +28,7 @@ from dbt.adapters.sas import sas_log, sas_macros
 from dbt.adapters.sas.credentials import SasCredentials
 from dbt.adapters.sas.utils import get_temp_data_set_name, get_temp_filename
 from dbt.adapters.sas.whereis import whereis
-from dbt.clients.agate_helper import DEFAULT_TYPE_TESTER
+from dbt_common.clients.agate_helper import DEFAULT_TYPE_TESTER
 from dbt_common.exceptions import (
     DbtRuntimeError,
     ConnectionError,
