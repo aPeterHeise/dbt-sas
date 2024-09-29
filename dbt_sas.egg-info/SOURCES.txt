@@ -1,6 +1,7 @@
 MANIFEST.in
 README.md
 pyproject.toml
+requirements.txt
 setup.cfg
 setup.py
 dbt/__init__.py
@@ -50,3 +51,4 @@ dbt_sas.egg-info/SOURCES.txt
 dbt_sas.egg-info/dependency_links.txt
 dbt_sas.egg-info/requires.txt
 dbt_sas.egg-info/top_level.txt
+tests/test_always_pass.py

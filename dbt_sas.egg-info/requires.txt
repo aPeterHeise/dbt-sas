@@ -1,5 +1,4 @@
-dbt-core
-requests
+saspy
 
 [test]
 pytest
