@@ -33,7 +33,7 @@ from dbt.adapters.sas.utils import (
 )
 from dbt.contracts.graph.manifest import Manifest
 from dbt.contracts.relation import RelationType
-from dbt.exceptions import RuntimeException
+from dbt_common.exceptions import DbtRuntimeError
 
 __all__ = ["SasAdapter"]
 
@@ -155,7 +155,7 @@ class SasAdapter(BaseAdapter):
         connection = self.connections.get_thread_connection()
         lib_base_path = connection.credentials.lib_base_path
         if not lib_base_path:
-            raise RuntimeException(
+            raise DbtRuntimeError(
                 "`lib_base_path` option is required for schema creation - please add the option to the profiles.yml configuration"
             )
         path = path_join(lib_base_path, relation.libname.lower())
@@ -166,7 +166,7 @@ class SasAdapter(BaseAdapter):
         connection = self.connections.get_thread_connection()
         lib_base_path = connection.credentials.lib_base_path
         if not lib_base_path:
-            raise RuntimeException(
+            raise DbtRuntimeError(
                 "`lib_base_path` option is required for dropping schemas - please add the option to the profiles.yml configuration"
             )
         path = path_join(lib_base_path, relation.libname.lower())
