@@ -17,7 +17,7 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from dbt.adapters.base import Credentials
+from dbt.adapters.contracts.connection import Credentials
 from dbt.adapters.sas.constants import (
     DEFAULT_CTE_SCHEMA,
     DEFAULT_DB,
