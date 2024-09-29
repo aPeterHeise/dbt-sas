@@ -29,7 +29,11 @@ from dbt.adapters.sas.credentials import SasCredentials
 from dbt.adapters.sas.utils import get_temp_data_set_name, get_temp_filename
 from dbt.adapters.sas.whereis import whereis
 from dbt.clients.agate_helper import DEFAULT_TYPE_TESTER
-from dbt.exceptions import FailedToConnectException, ParsingException, RuntimeException
+from dbt_common.exceptions import (
+    DbtRuntimeError,
+    ConnectionError,
+    DbtConfigError
+)
 from dbt.logger import GLOBAL_LOGGER as logger
 
 from .abstract_handler import AbstractConnectionHandler
@@ -45,7 +49,7 @@ class SaspyConnectionHandler(AbstractConnectionHandler):
         # Search for java
         java = credentials.java_path or whereis("java")
         if not java:
-            raise FailedToConnectException("Java not found in path.")
+            raise ConnectionError("Java not found in path.")
         # Open SAS session
         try:
             self.session = saspy.SASsession(
@@ -59,7 +63,7 @@ class SaspyConnectionHandler(AbstractConnectionHandler):
             )
         except SASIOConnectionError as ex:
             logger.debug(f"Got an error when attempting to create SAS Session: '{ex}'")
-            raise FailedToConnectException(str(ex))
+            raise ConnectionError(str(ex))
 
     def submit(self, code: str, note: Optional[str] = None, ignore_warnings: bool = False) -> str:
         """Submit code to the SAS server"""
@@ -98,9 +102,9 @@ class SaspyConnectionHandler(AbstractConnectionHandler):
 
         valid = self.session._io._sb.file_info(filename, quiet=True)
         if valid is None:
-            raise RuntimeException(f"{filename} not found")
+            raise DbtRuntimeError(f"{filename} not found")
         elif valid == {}:
-            raise RuntimeException(f"{filename} is a directory")
+            raise DbtRuntimeError(f"{filename} is a directory")
 
         code = f"filename _sp_updn '{filename}' recfm=F encoding=binary lrecl=4096;"
         self.session._io.submit(code, "text")
@@ -117,8 +121,8 @@ class SaspyConnectionHandler(AbstractConnectionHandler):
                     rc = self.session._io.pid.wait(0)
                     self.session._io.pid = None
                     self.session._io._sb.SASpid = None
-                    raise RuntimeException("SAS process has terminated unexpectedly")
-                except RuntimeException:
+                    raise DbtRuntimeError("SAS process has terminated unexpectedly")
+                except DbtRuntimeError:
                     raise
                 except Exception:
                     pass
@@ -127,7 +131,7 @@ class SaspyConnectionHandler(AbstractConnectionHandler):
                 if rc[1]:
                     self.session._io.pid = None
                     self.session._io._sb.SASpid = None
-                    raise RuntimeException("SAS process has terminated unexpectedly")
+                    raise DbtRuntimeError("SAS process has terminated unexpectedly")
 
             if bail:
                 if logcodeb in data:
@@ -166,4 +170,4 @@ class SaspyConnectionHandler(AbstractConnectionHandler):
             return agate.Table.from_object(data, column_types=DEFAULT_TYPE_TESTER)
         except json.decoder.JSONDecodeError as ex:
             sas_log.error(f"Error parsing JSON response: {str(ex)}")
-            raise ParsingException(f"Error parsing JSON response: {str(ex)}")
+            raise DbtConfigError(f"Error parsing JSON response: {str(ex)}")

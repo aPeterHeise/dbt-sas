@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 from dbt.adapters.base.column import Column
-from dbt.exceptions import RuntimeException
+from dbt_common.exceptions import DbtRuntimeError
 
 __all__ = ["SasColumn", "TEXT"]
 

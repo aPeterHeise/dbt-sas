@@ -22,7 +22,9 @@ import agate
 
 from dbt.adapters.sas import sas_log, sas_macros
 from dbt.adapters.sas.credentials import SasCredentials
-from dbt.exceptions import RuntimeException
+from dbt_common.exceptions import (
+    DbtRuntimeError
+)
 from dbt.adapters.sas.utils import path_join
 
 
@@ -69,7 +71,7 @@ class AbstractConnectionHandler(abc.ABC):
             error_lines = [line for line in log_lines if line.startswith("ERROR")]
         if error_lines:
             sas_log.error(output)
-            raise RuntimeException(error_lines[0])
+            raise DbtRuntimeError(error_lines[0])
 
     @classmethod
     def load_autoexec(self, credentials: SasCredentials) -> str:
