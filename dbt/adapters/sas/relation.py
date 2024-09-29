@@ -23,7 +23,7 @@ from typing import Optional, TypeVar
 from dbt.adapters.base.relation import BaseRelation, Policy
 from dbt.adapters.sas.connections import is_lib_name_strict_mode
 from dbt.adapters.sas.constants import DATA_SET_MAX_LEN, DEFAULT_DB, LIBNAME_MAX_LEN
-from dbt.contracts.relation import RelationType
+from dbt.adapters.contracts.relation import RelationType
 from dbt.exceptions import DatabaseException
 
 __all__ = [
