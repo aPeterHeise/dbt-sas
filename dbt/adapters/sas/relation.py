@@ -24,7 +24,7 @@ from dbt.adapters.base.relation import BaseRelation, Policy
 from dbt.adapters.sas.connections import is_lib_name_strict_mode
 from dbt.adapters.sas.constants import DATA_SET_MAX_LEN, DEFAULT_DB, LIBNAME_MAX_LEN
 from dbt.adapters.contracts.relation import RelationType
-from dbt.exceptions import DatabaseException
+from dbt_common.exceptions import DbtDatabaseError
 
 __all__ = [
     "SasRelation",
@@ -88,9 +88,9 @@ class SasRelation(BaseRelation):
                         schema = schema[len(prefix) :].strip('_')
                         schema = f"t_{schema}"
                 if len(schema) > LIBNAME_MAX_LEN:
-                    raise DatabaseException(f"`{schema}` is not a valid libname (length > {LIBNAME_MAX_LEN})")
+                    raise DbtDatabaseError(f"`{schema}` is not a valid libname (length > {LIBNAME_MAX_LEN})")
             if identifier and len(identifier) > DATA_SET_MAX_LEN:
-                raise DatabaseException(f"`{identifier}` is not a valid data set name (length > {DATA_SET_MAX_LEN}")
+                raise DbtDatabaseError(f"`{identifier}` is not a valid data set name (length > {DATA_SET_MAX_LEN}")
         else:
             if schema:
                 schema = schema.lower()
