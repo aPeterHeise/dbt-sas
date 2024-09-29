@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 132
+skip-string-normalization = true
+
+[tool.coverage.run]
+source = ["dbt"]
+
+[tool.coverage.report]
+exclude_lines = [ "# pragma: no cover", "if TYPE_CHECKING:" ]
+
+[tool.isort]
+profile = "black"

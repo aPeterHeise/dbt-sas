@@ -1,0 +1,34 @@
+fixed:
+  type: sas
+  database: sas
+  threads: 1
+  handler: ws
+  fail_on_warnings: False
+  lib_name_strict_mode: False
+prompts:
+  host:
+    hint: "SAS server hostname"
+    type: string
+  port:
+    hint: "SAS server port"
+    default: 8591
+    type: int
+  user:
+    hint: "The username to use to connect to the server"
+    type: string
+  password:
+    hint: "The password to use for authenticating to the server"
+    type: string
+    hide_input: true
+  schema:
+    hint: "Default SAS libname"
+    type: string
+    default: "WORK"
+  lib_base_path:
+    hint: "Base path (on the SAS server) for new libraries"
+    type: string
+    default: ""
+  autoexec:
+    hint: "Local path of autoexec.sas file"
+    type: string
+    default: ""

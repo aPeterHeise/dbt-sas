@@ -1,0 +1,3 @@
+proc sql;
+{{ sql }};
+quit;
