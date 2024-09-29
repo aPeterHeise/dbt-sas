@@ -1,4 +1,0 @@
-saspy
-
-[test]
-pytest
