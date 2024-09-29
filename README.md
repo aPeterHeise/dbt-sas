@@ -16,6 +16,8 @@ unzip python-package-distributions-3.X.zip
 pip install python-package-distributions-3.X/dbt_sas*.*whl
 ```
 
+**Note**: Pypi integration following once more mature package is available.
+
 ## Configurations
 
 Basic `profile.yml` for connecting to SAS:
