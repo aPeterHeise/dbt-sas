@@ -10,8 +10,10 @@ The dbt-sas package allows dbt to connect to SAS. Graciously forked from [Alkemy
 
 ## Installation
 
+Get latest artifact from [Python Build Action](https://github.com/aPeterHeise/dbt-sas/actions/workflows/python-build.yml).
 ```
-pip install dbt-sas
+unzip python-package-distributions-3.X.zip
+pip install python-package-distributions-3.X/dbt_sas*.*whl
 ```
 
 ## Configurations
