@@ -1,6 +1,6 @@
 # SAS DBT adapter
 
-[![Build Status](https://github.com/DLBD-Department/dbt-sas/workflows/Tests/badge.svg)](https://github.com/DLBD-Department/dbt-sas/actions)
+[![Python package](https://github.com/aPeterHeise/dbt-sas/actions/workflows/python-package.yml/badge.svg)](https://github.com/aPeterHeise/dbt-sas/actions/workflows/python-package.yml)
 [![PyPI version](https://badge.fury.io/py/dbt-sas.svg)](https://badge.fury.io/py/dbt-sas)
 [![PyPI](https://img.shields.io/pypi/pyversions/dbt-sas.svg)](https://pypi.org/project/dbt-sas)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
