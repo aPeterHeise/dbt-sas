@@ -100,17 +100,6 @@ Log families are:
 - sql
 - original_sql
 
-## Adapter Testing
-
-- Install dev requirements
-```console
-$ pip install -r dev_requirements.txt
-```
-- Run pytest
-```console    
-$ python -m pytest tests/
-```
-
 ## Licence
 
 Apache License, Version 2.0
