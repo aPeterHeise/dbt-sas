@@ -24,7 +24,7 @@ from requests.exceptions import RequestException
 from dbt.adapters.sas import sas_log
 from dbt.adapters.sas.credentials import SasCredentials
 from dbt_common.clients.agate_helper import DEFAULT_TYPE_TESTER
-from dbt.exceptions import DatabaseException, FailedToConnectException
+from dbt_common.exceptions import DbtDatabaseError, ConnectionError
 
 from .abstract_handler import AbstractConnectionHandler
 
@@ -93,16 +93,16 @@ class WsConnectionHandler(AbstractConnectionHandler):
                 **kargs,
             )
         except RequestException as ex:
-            raise DatabaseException(str(ex))
+            raise DbtDatabaseError(str(ex))
         if response.status_code == 401:
-            raise DatabaseException("Invalid Web Service credentials")
+            raise DbtDatabaseError("Invalid Web Service credentials")
         if response.status_code != 200:
             try:
                 message = response.json()["error"]
             except Exception:
                 message = response.text
             sas_log.error(message)
-            raise DatabaseException(message)
+            raise DbtDatabaseError(message)
         return response
 
     def list_sessions(self) -> List[SessionId]:
@@ -119,7 +119,7 @@ class WsConnectionHandler(AbstractConnectionHandler):
         }
         response = self.request(method="GET", path=path, params=params).json()
         if response["status"] != "success":
-            raise DatabaseException("Error opening SAS session")
+            raise DbtDatabaseError("Error opening SAS session")
         session_id = response.get("session").get("sessionId")
         # Load autoexec
         autoexec = self.load_autoexec(self.credentials)
@@ -142,5 +142,5 @@ class WsConnectionHandler(AbstractConnectionHandler):
                 return sessions[0].get("sessionId")
             else:
                 return self.open_session()
-        except DatabaseException as ex:
-            raise FailedToConnectException(ex.msg)
+        except DbtDatabaseError as ex:
+            raise ConnectionError(ex.msg)
