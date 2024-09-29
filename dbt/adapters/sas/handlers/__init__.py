@@ -18,7 +18,9 @@ __all__ = "get_handler"
 
 from typing import Type
 
-from dbt.exceptions import RuntimeException
+from dbt_common.exceptions import (
+    DbtRuntimeError
+)
 
 from .abstract_handler import AbstractConnectionHandler
 
@@ -33,4 +35,4 @@ def get_handler(handler: str) -> Type[AbstractConnectionHandler]:
 
         return SaspyConnectionHandler
     else:
-        raise RuntimeException(f"Invalid handle f{handler}")
+        raise DbtRuntimeError(f"Invalid handle f{handler}")

@@ -23,7 +23,9 @@ from typing import Any, List
 import agate
 
 from dbt.adapters.sas.constants import WORK_SCHEMA
-from dbt.exceptions import RuntimeException
+from dbt_common.exceptions import (
+    DbtRuntimeError
+)
 
 __all__ = [
     "get_temp_filename",
@@ -58,7 +60,7 @@ def path_join(*parts: List[str]) -> str:
     if not parts:
         return ""
     if any([x for x in parts if ".." in x]):
-        raise RuntimeException("Invalid path")
+        raise DbtRuntimeError("Invalid path")
     # Count posix separators
     p1 = len([x for x in parts if x.startswith("/") or x.endswith("/")])
     p2 = len([x for x in parts if "/" in x])

@@ -25,7 +25,10 @@ from dbt.adapters.sas.credentials import SasCredentials
 from dbt.adapters.sas.cte import prepare_query
 from dbt.adapters.sas.handlers import get_handler
 from dbt.contracts.connection import AdapterResponse, Connection, ConnectionState
-from dbt.exceptions import FailedToConnectException, RuntimeException
+from dbt_common.exceptions import (
+    DbtRuntimeError,
+    ConnectionError
+)
 from dbt.logger import GLOBAL_LOGGER as logger
 
 __all__ = [
@@ -52,7 +55,7 @@ class SasConnectionManager(BaseConnectionManager):
         except Exception as ex:
             logger.debug(f"Error while running:\n{sql}")
             logger.debug(ex)
-            raise RuntimeException(str(ex))
+            raise DbtRuntimeError(str(ex))
 
     @classmethod
     def open(cls, connection: Connection) -> Connection:
@@ -69,7 +72,7 @@ class SasConnectionManager(BaseConnectionManager):
                 connection.state = ConnectionState.OPEN
                 default_credentials = connection.credentials
                 return connection
-            except FailedToConnectException:
+            except ConnectionError:
                 connection.handle = None
                 connection.state = ConnectionState.FAIL
                 raise
